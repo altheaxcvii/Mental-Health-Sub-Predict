@@ -5,6 +5,7 @@ import string
 import nltk
 from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
+from streamlit_chat import message
 import pickle
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -34,40 +35,74 @@ def preprocesstext(text):
 def predict(astring):
     aseries = pd.Series(astring)
     aseries = aseries.apply(preprocesstext)
-    with open("testvotemodel.pkl", "rb") as file:
-        loaded_model = pickle.load(file)
-    with open("vectorizer.pkl", "rb") as file:
-        loaded_vectorizer = pickle.load(file)
     X = loaded_vectorizer.transform(aseries)
     return loaded_model.predict(X)
 
-loreumtext = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+def download_data():
+    data = ''
+    for i in range(len(st.session_state['machine'])):
+        data += f"User: {st.session_state['user'][i]}\n\n\n"
+        data += f"Machine: {st.session_state['machine'][i]}\n\n\n\n\n"
+    # Save data to a text file
+    with open("conversation_data.txt", "w") as file:
+        file.write(data)
 
-st.subheader('Input a Reddit Post')
-astring = st.text_area('Paste the post title and post content here.', placeholder = loreumtext, height = 200)
-if st.button('Submit'):
-    if astring.strip():
-        st.write(f'The post is predicted to be from r/{predict(astring)[0]}')
-        st.balloons()
-        if predict(astring)[0] == 'schizophrenia':
-            st.write('Schizophrenia is a chronic brain disorder that affects less than one percent of the U.S. population. When schizophrenia is active, symptoms can include delusions, hallucinations, disorganized speech, trouble with thinking and lack of motivation.')
-        elif predict(astring)[0] == 'bipolar':
-            st.write('Bipolar disorder (formerly called manic-depressive illness or manic depression) is a mental illness that causes unusual shifts in a person\'s mood, energy, activity levels, and concentration. These shifts can make it difficult to carry out day-to-day tasks.')
-    else:
-        st.warning('I told you to input some text, didn\'t I?', icon='⚠️')
+def convo():
+    if 'input_key' not in st.session_state:
+        st.session_state['input_key'] = 0
 
+    user_input = st.text_input("Insert a reddit post from either r/bipolar or r/schizophrenia", key='input_' + str(st.session_state['input_key']))
+
+    if st.button('Submit', key='button_' + str(st.session_state['input_key'])):
+        if len(user_input) > 0:
+            st.session_state.machine.append(f'I think the post is from r/{predict(user_input)[0]}')
+            st.session_state.user.append(user_input)
+            st.session_state['input_key'] += 1  # create a new input box for the next run
+        else:
+            st.session_state.machine.append('I cannot predict if you don\'t send me anything')
+            st.session_state.user.append('Too lazy to write anything')
+            st.session_state['input_key'] += 1  # create a new input box for the next run
+
+        st.experimental_rerun()  # Rerun the app to display the updated messages
 
 with st.sidebar:
     st.subheader('How to Use')
     st.write('1. Insert a reddit post\'s title and text.')
     st.write('2. Click the Submit button.')
+    st.write('3. You may download the entire conversation as a .txt file by using the button below')
+    if st.button("Download Conversation Data"):
+        download_data()
+        st.success("Conversation data downloaded successfully!")
     st.markdown('''---''')
     st.subheader('About Us')
-    st.write('random text to be edited')
+    st.write('We are the Data Regressionantics from GA DSI37😎')
     st.markdown('''---''')
-    st.subheader('Disclaimer')
+    st.subheader('⚠️Disclaimer⚠️')
     st.write('Not for diagnostic usage!! Please find a legit psychiatrist and get them to use their holy DSM V to diagnose you. Thanks!!')
     st.markdown('''---''')
     st.subheader('FAQ')
     st.subheader('Is it 100% accurate?')
     st.write('No, the machine learning model is not 100% accurate. While it is designed to make predictions and perform tasks to the best of its abilities, it is important to note that it may still make errors or provide imperfect results. Machine learning models are trained based on existing data and patterns, and their accuracy depends on the quality and diversity of the data used for training. Additionally, the model\'s performance can be influenced by various factors such as the complexity of the task, the availability of relevant data, and the limitations of the model itself. Therefore, it is advisable to interpret the model\'s outputs with a level of caution and consider its predictions as probabilistic rather than absolute certainties. Regular monitoring, evaluation, and improvement of the model are crucial to enhance its accuracy over time.')
+    st.subheader('What is the purpose of your model?')
+    st.write('The model aims to predict whether the posts comes from r/bipolar or r/schizophrenia, based on their content.')
+    st.subheader('What data did you use to train your model?')
+    st.write('We used existing posts from both subreddit that we scrapped to train our model.')
+    st.subheader('What should I do if I need mental health help?')
+    st.write('If you are facing a mental health crisis, please call SG Mental Health Helpline by IMH at +65 6389 2222')
+    st.subheader('Is user privacy ensured?')
+    st.write('Any text that are inputted into the model here are NOT saved (because I\'m not good enough to code that in yet🥲)')
+
+message('Hello! I will predict if you had sent me a post from r/bipolar or r/schizophrenia. I may not be 100% accurate, but I do try my best!')
+
+if 'machine' not in st.session_state:
+    st.session_state['machine'] = []
+    st.session_state['user'] = []
+
+if st.session_state['user']:
+    for i in range(len(st.session_state['machine'])):
+        message(st.session_state['user'][i], is_user=True, key=f"user_message_{i}")
+        message(st.session_state['machine'][i], key=f"machine_message_{i}")
+    convo()
+else:
+    convo()
+
