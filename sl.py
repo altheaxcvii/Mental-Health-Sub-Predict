@@ -54,5 +54,5 @@ if st.button('Submit'):
         elif predict(astring)[0] == 'bipolar':
             st.write('some fun fact about bipolar')
     else:
-        st.warning('I told you to input some text, didn\'t I?', icon=⚠️)
+        st.warning('I told you to input some text, didn\'t I?', icon='⚠️')
 
