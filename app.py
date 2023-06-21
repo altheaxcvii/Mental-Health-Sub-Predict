@@ -1,3 +1,4 @@
+#importing and downloading 
 import streamlit as st
 import pandas as pd
 import re
@@ -11,7 +12,8 @@ nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
 
-
+#Configurations
+st.set_page_config(page_title='Subreddit Prediction', page_icon='🔮')
 st.title('🔮Subreddit Prediction🔮')
 st.write('This machine learning model is built with xxx model(s) and will predict whether the post comes from r/bipolar or r/schizophrenia')
 
@@ -22,6 +24,7 @@ with open("testvotemodel.pkl", "rb") as file:
 with open("vectorizer.pkl", "rb") as file:
     loaded_vectorizer = pickle.load(file)
 
+#Creating functions
 def preprocesstext(text):
     text = text.lower() #convert to lowercase
     text = re.sub(r'[^a-zA-Z]', ' ', text) #remove symbols
@@ -65,6 +68,8 @@ def convo():
 
         st.experimental_rerun()  # Rerun the app to display the updated messages
 
+
+#Sidebar
 with st.sidebar:
     st.subheader('How to Use')
     st.write('1. Insert a reddit post\'s title and text.')
@@ -92,6 +97,8 @@ with st.sidebar:
     st.subheader('Is user privacy ensured?')
     st.write('Any text that are inputted into the model here are NOT saved (because I\'m not good enough to code that in yet🥲)')
 
+
+#Start of 'chat bot' codes PLEASE DO NOT EDIT ANYTHING BELOW
 message('Hello! I will predict if you had sent me a post from r/bipolar or r/schizophrenia. I may not be 100% accurate, but I do try my best!')
 
 if 'machine' not in st.session_state:
@@ -105,4 +112,3 @@ if st.session_state['user']:
     convo()
 else:
     convo()
-
