@@ -52,7 +52,19 @@ if st.button('Submit'):
         if predict(astring)[0] == 'schizophrenia':
             st.write('Schizophrenia is a chronic brain disorder that affects less than one percent of the U.S. population. When schizophrenia is active, symptoms can include delusions, hallucinations, disorganized speech, trouble with thinking and lack of motivation.')
         elif predict(astring)[0] == 'bipolar':
-            st.write('Bipolar disorder (formerly called manic-depressive illness or manic depression) is a mental illness that causes unusual shifts in a person's mood, energy, activity levels, and concentration. These shifts can make it difficult to carry out day-to-day tasks.')
+            st.write('Bipolar disorder (formerly called manic-depressive illness or manic depression) is a mental illness that causes unusual shifts in a person\'s mood, energy, activity levels, and concentration. These shifts can make it difficult to carry out day-to-day tasks.')
     else:
         st.warning('I told you to input some text, didn\'t I?', icon='⚠️')
 
+
+with st.sidebar:
+    st.subheader('How to Use')
+    st.write('1. Insert a reddit post\'s title and text.')
+    st.write('2. Click the Submit button.')
+    st.subheader('About us')
+    st.write('random text to be edited')
+    st.subheader('Disclaimer')
+    st.write('Not for diagnostic usage!!')
+    st.subheader('FAQ')
+    st.write('Is it 100% accurate?')
+    st.write('No, the machine learning model is not 100% accurate. While it is designed to make predictions and perform tasks to the best of its abilities, it is important to note that it may still make errors or provide imperfect results. Machine learning models are trained based on existing data and patterns, and their accuracy depends on the quality and diversity of the data used for training. Additionally, the model\'s performance can be influenced by various factors such as the complexity of the task, the availability of relevant data, and the limitations of the model itself. Therefore, it is advisable to interpret the model\'s outputs with a level of caution and consider its predictions as probabilistic rather than absolute certainties. Regular monitoring, evaluation, and improvement of the model are crucial to enhance its accuracy over time.
