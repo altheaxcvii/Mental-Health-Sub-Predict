@@ -58,7 +58,7 @@ if st.button('Submit'):
 
 
 with st.sidebar:
-    st.subheader(f'**How to Use**')
+    st.subheader('How to Use')
     st.write('1. Insert a reddit post\'s title and text.')
     st.write('2. Click the Submit button.')
     st.markdown('''---''')
@@ -69,5 +69,5 @@ with st.sidebar:
     st.write('Not for diagnostic usage!! Please find a legit psychiatrist and get them to use their holy DSM V to diagnose you. Thanks!!')
     st.markdown('''---''')
     st.subheader('FAQ')
-    st.write('Is it 100% accurate?')
+    st.subheader('Is it 100% accurate?')
     st.write('No, the machine learning model is not 100% accurate. While it is designed to make predictions and perform tasks to the best of its abilities, it is important to note that it may still make errors or provide imperfect results. Machine learning models are trained based on existing data and patterns, and their accuracy depends on the quality and diversity of the data used for training. Additionally, the model\'s performance can be influenced by various factors such as the complexity of the task, the availability of relevant data, and the limitations of the model itself. Therefore, it is advisable to interpret the model\'s outputs with a level of caution and consider its predictions as probabilistic rather than absolute certainties. Regular monitoring, evaluation, and improvement of the model are crucial to enhance its accuracy over time.')
