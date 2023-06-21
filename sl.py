@@ -8,6 +8,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
 nltk.download('punkt')
 nltk.download('stopwords')
+nltk.download('wordnet')
 
 
 st.title('🔮Subreddit Prediction🔮')
