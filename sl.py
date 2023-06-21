@@ -6,6 +6,8 @@ import nltk
 from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
+nltk.download('punkt')
+
 
 st.title('🔮Subreddit Prediction🔮')
 st.write('This machine learning model is built with xxx model(s) and will predict whether the post comes from r/bipolar or r/schizophrenia')
