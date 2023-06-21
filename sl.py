@@ -46,10 +46,13 @@ loreumtext = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ei
 st.subheader('Input a Reddit Post')
 astring = st.text_area('Paste the post title and post content here.', placeholder = loreumtext, height = 200)
 if st.button('Submit'):
-    st.write(f'The post is predicted to be from r/{predict(astring)[0]}')
-    st.balloons()
-    if predict(astring)[0] == 'schizophrenia':
-        st.write('Some fun fact about schizophrenia')
-    elif predict(astring)[0] == 'bipolar':
-        st.write('some fun fact about bipolar')
+    if astring.strip():
+        st.write(f'The post is predicted to be from r/{predict(astring)[0]}')
+        st.balloons()
+        if predict(astring)[0] == 'schizophrenia':
+            st.write('Some fun fact about schizophrenia')
+        elif predict(astring)[0] == 'bipolar':
+            st.write('some fun fact about bipolar')
+    else:
+        st.warning('I told you to input some text, didn\'t I?', *, icon=⚠️)
 
