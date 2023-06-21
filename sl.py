@@ -3,7 +3,6 @@ import pandas as pd
 import re
 import string
 import nltk
-import matplotlib.pyplot as plt
 from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
