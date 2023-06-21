@@ -50,9 +50,9 @@ if st.button('Submit'):
         st.write(f'The post is predicted to be from r/{predict(astring)[0]}')
         st.balloons()
         if predict(astring)[0] == 'schizophrenia':
-            st.write('Some fun fact about schizophrenia')
+            st.write('Schizophrenia is a chronic brain disorder that affects less than one percent of the U.S. population. When schizophrenia is active, symptoms can include delusions, hallucinations, disorganized speech, trouble with thinking and lack of motivation.')
         elif predict(astring)[0] == 'bipolar':
-            st.write('some fun fact about bipolar')
+            st.write('Bipolar disorder (formerly called manic-depressive illness or manic depression) is a mental illness that causes unusual shifts in a person's mood, energy, activity levels, and concentration. These shifts can make it difficult to carry out day-to-day tasks.')
     else:
         st.warning('I told you to input some text, didn\'t I?', icon='⚠️')
 
