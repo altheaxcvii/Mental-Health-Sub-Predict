@@ -74,14 +74,13 @@ with st.sidebar:
     st.write('1. Insert a reddit post\'s title and text.')
     st.write('2. Click the Submit button.')
     st.write('3. You may download the entire conversation as a .txt file by using the button below')
-    if st.button("Prepare Conversation Data"):
-        data = download_data()
-        st.download_button(
-            label="Download Conversation Data",
-            data=data,
-            file_name="conversation_data.txt",
-            mime="text/plain"
-        )
+    data = download_data()
+    st.download_button(
+        label="Download Conversation Data",
+        data=data,
+        file_name="conversation_data.txt",
+        mime="text/plain"
+    )
     st.markdown('''---''')
     st.subheader('About Us')
     st.write('We are the Data Regressionantics from GA DSI37😎')
