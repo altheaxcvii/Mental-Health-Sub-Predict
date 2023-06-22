@@ -46,9 +46,8 @@ def download_data():
     for i in range(len(st.session_state['machine'])):
         data += f"User: {st.session_state['user'][i]}\n\n\n"
         data += f"Machine: {st.session_state['machine'][i]}\n\n\n\n\n"
-    # Save data to a text file
-    with open("conversation_data.txt", "w") as file:
-        file.write(data)
+    return data
+
 
 def convo():
     if 'input_key' not in st.session_state:
@@ -75,9 +74,14 @@ with st.sidebar:
     st.write('1. Insert a reddit post\'s title and text.')
     st.write('2. Click the Submit button.')
     st.write('3. You may download the entire conversation as a .txt file by using the button below')
-    if st.button("Download Conversation Data"):
-        download_data()
-        st.success("Conversation data downloaded successfully!")
+    if st.button("Prepare Conversation Data"):
+        data = download_data()
+        st.download_button(
+            label="Download Conversation Data",
+            data=data,
+            file_name="conversation_data.txt",
+            mime="text/plain"
+        )
     st.markdown('''---''')
     st.subheader('About Us')
     st.write('We are the Data Regressionantics from GA DSI37😎')
