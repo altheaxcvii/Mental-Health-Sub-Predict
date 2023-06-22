@@ -12,6 +12,7 @@ nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
 
+
 #Configurations
 st.set_page_config(page_title='Subreddit Prediction', page_icon='🔮')
 st.title('🔮Subreddit Prediction🔮')
@@ -23,6 +24,7 @@ with open("testvotemodel.pkl", "rb") as file:
     loaded_model = pickle.load(file)
 with open("vectorizer.pkl", "rb") as file:
     loaded_vectorizer = pickle.load(file)
+
 
 #Creating functions
 def preprocesstext(text):
@@ -49,7 +51,6 @@ def download_data():
         data += "\n\n ----------------------\n\n"
     return data
 
-
 def convo():
     if 'input_key' not in st.session_state:
         st.session_state['input_key'] = 0
@@ -67,6 +68,22 @@ def convo():
             st.session_state['input_key'] += 1  # create a new input box for the next run
 
         st.experimental_rerun()  # Rerun the app to display the updated messages
+
+
+#Start of 'chat bot' codes PLEASE DO NOT EDIT ANYTHING BELOW
+message('Hello! I will predict if you had sent me a post from r/bipolar or r/schizophrenia. I may not be 100% accurate, but I do try my best!')
+
+if 'machine' not in st.session_state:
+    st.session_state['machine'] = []
+    st.session_state['user'] = []
+
+if st.session_state['user']:
+    for i in range(len(st.session_state['machine'])):
+        message(st.session_state['user'][i], is_user=True, key=f"user_message_{i}")
+        message(st.session_state['machine'][i], key=f"machine_message_{i}")
+    convo()
+else:
+    convo()
 
 
 #Sidebar
@@ -101,18 +118,4 @@ with st.sidebar:
     st.subheader('Is user privacy ensured?')
     st.write('Any text that are inputted into the model here are NOT saved (because I\'m not good enough to code that in yet🥲)')
 
-
-#Start of 'chat bot' codes PLEASE DO NOT EDIT ANYTHING BELOW
-message('Hello! I will predict if you had sent me a post from r/bipolar or r/schizophrenia. I may not be 100% accurate, but I do try my best!')
-
-if 'machine' not in st.session_state:
-    st.session_state['machine'] = []
-    st.session_state['user'] = []
-
-if st.session_state['user']:
-    for i in range(len(st.session_state['machine'])):
-        message(st.session_state['user'][i], is_user=True, key=f"user_message_{i}")
-        message(st.session_state['machine'][i], key=f"machine_message_{i}")
-    convo()
-else:
-    convo()
+#End of code 🤍
