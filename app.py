@@ -42,7 +42,7 @@ def predict(astring):
     return loaded_model.predict(X)
 
 def download_data():
-    data = ''
+    data = 'Disclaimer: The machine outputs are predictions and should NOT be used for diagnosis. \n\n ----------------------\n\n'
     for i in range(len(st.session_state['machine'])):
         data += f"User: {st.session_state['user'][i]}\n\n\n"
         data += f"Machine: {st.session_state['machine'][i]}\n\n\n\n\n"
